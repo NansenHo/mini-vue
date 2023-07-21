@@ -2,6 +2,8 @@
 
 Implementing a minimal vue3 model for learning Vue3 in depth.
 
+> This repo comes with [notes](notes) to record what I was thinking and what I learned from studying mini-vue.
+
 ## Why
 
 When we need to learn Vue 3 in depth, we need to read the Vue 3 source code.
@@ -17,7 +19,4 @@ We should focus on the core logic, and the purpose of this library is to strip o
 - [x] Implementation of `reactive`
 - [x] `track` dependencies collection
 - [x] `trigger` dependencies triggering
-
-## Notes
-
-[notes of mini vue](notes)
+- [x] `effect` return `runner` function

@@ -7,14 +7,14 @@ class ReactiveEffect {
 
   run() {
     activeEffect = this;
-    this._fn();
+    return this._fn();
   }
 }
 
 // collect dependents
 const targetMap = new Map();
 export function track(target, key) {
-	// target-depsMap --> key-dep ---> functions
+  // target-depsMap --> key-dep ---> functions
   let depsMap = targetMap.get(target);
   if (!depsMap) {
     depsMap = new Map();
@@ -44,4 +44,6 @@ let activeEffect;
 export function effect(fn) {
   const _effect = new ReactiveEffect(fn);
   _effect.run();
+
+  return _effect.run.bind(_effect);
 }
