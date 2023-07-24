@@ -37,3 +37,31 @@ describe("effect", () => {
     expect(value).toBe("foo");
   });
 });
+
+it("scheduler", () => {
+  let dummy;
+  let run: any;
+  const obj = reactive({ foo: 1 });
+  const scheduler = jest.fn(() => {
+    run = runner;
+  });
+  const runner = effect(
+    () => {
+      dummy = obj.foo;
+    },
+    { scheduler }
+  );
+
+  // initialization
+  // fn will be called, scheduler will be not.
+  expect(scheduler).not.toHaveBeenCalled();
+  expect(dummy).toBe(1);
+  // updates
+  // fn will not be executed directly, instead, scheduler will be invoked.
+  obj.foo++;
+  expect(dummy).toBe(1);
+  expect(scheduler).toHaveBeenCalledTimes(1);
+  // when the runner is called, it will execute fn again.
+  run();
+  expect(dummy).toBe(2);
+});
