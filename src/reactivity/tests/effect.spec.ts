@@ -1,7 +1,7 @@
 // You need to use Babel to transpile ES6 Modules into CommonJS Modules in NodeJS
 // Detail: https://jestjs.io/docs/getting-started#using-babel
 import { reactive } from "../reactive";
-import { effect } from "../effect";
+import { effect, stop } from "../effect";
 
 describe("effect", () => {
   it("happy path", () => {
@@ -36,32 +36,69 @@ describe("effect", () => {
     // runner will return the return value of fn
     expect(value).toBe("foo");
   });
-});
 
-it("scheduler", () => {
-  let dummy;
-  let run: any;
-  const obj = reactive({ foo: 1 });
-  const scheduler = jest.fn(() => {
-    run = runner;
+  it("scheduler", () => {
+    let dummy;
+    let run: any;
+    const obj = reactive({ foo: 1 });
+    const scheduler = jest.fn(() => {
+      run = runner;
+    });
+    const runner = effect(
+      () => {
+        dummy = obj.foo;
+      },
+      { scheduler }
+    );
+
+    // initialization
+    // fn will be called, scheduler will be not.
+    expect(scheduler).not.toHaveBeenCalled();
+    expect(dummy).toBe(1);
+
+    // updates
+    // fn will not be executed directly, instead, scheduler will be invoked.
+    obj.foo++;
+    expect(dummy).toBe(1);
+    expect(scheduler).toHaveBeenCalledTimes(1);
+
+    // when the runner is called, it will execute fn again.
+    run();
+    expect(dummy).toBe(2);
   });
-  const runner = effect(
-    () => {
-      dummy = obj.foo;
-    },
-    { scheduler }
-  );
 
-  // initialization
-  // fn will be called, scheduler will be not.
-  expect(scheduler).not.toHaveBeenCalled();
-  expect(dummy).toBe(1);
-  // updates
-  // fn will not be executed directly, instead, scheduler will be invoked.
-  obj.foo++;
-  expect(dummy).toBe(1);
-  expect(scheduler).toHaveBeenCalledTimes(1);
-  // when the runner is called, it will execute fn again.
-  run();
-  expect(dummy).toBe(2);
+  it("stop", () => {
+    let dummy;
+    const obj = reactive({ foo: 1 });
+    const runner = effect(() => {
+      dummy = obj.foo;
+    });
+    obj.foo = 2;
+    expect(dummy).toBe(2);
+
+    stop(runner);
+    obj.foo = 3;
+    expect(dummy).toBe(2);
+
+    // stopped effect should still be manually callable.
+    runner();
+    expect(dummy).toBe(3);
+  });
+
+  it("onStop", () => {
+    let dummy;
+    let onStop = jest.fn();
+    const obj = reactive({ foo: 1 });
+    const runner = effect(
+      () => {
+        dummy = obj.foo;
+      },
+      {
+        onStop,
+      }
+    );
+
+    stop(runner);
+    expect(onStop).toHaveBeenCalled();
+  });
 });
