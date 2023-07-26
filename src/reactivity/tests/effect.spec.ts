@@ -101,4 +101,8 @@ describe("effect", () => {
     stop(runner);
     expect(onStop).toHaveBeenCalled();
   });
+
+  it("readonly", () => {
+    
+  });
 });
