@@ -1,5 +1,12 @@
 import { track, trigger } from "./effect";
 
+// Performance Optimization:
+// In order to avoid repetitive calls to the `createGetter` function,
+// use an object to store previously created getter.
+let get = createGetter();
+let set = createSetter();
+let readonlyGet = createGetter(true);
+
 // higher-order function
 function createGetter(isReadonly = false) {
   return function get(target, key) {
@@ -20,12 +27,12 @@ function createSetter() {
 }
 
 export const mutableHandlers = {
-  get: createGetter(),
-  set: createSetter(),
+  get,
+  set,
 };
 
 export const readonlyHandlers = {
-  get: createGetter(true),
+  get: readonlyGet,
   set(target, key, value) {
     console.warn(
       `key: ${String(
