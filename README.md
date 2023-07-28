@@ -20,3 +20,6 @@ We should focus on the core logic, and the purpose of this library is to strip o
 - [x] `track` dependencies collection
 - [x] `trigger` dependencies triggering
 - [x] `effect` return `runner` function
+- [x] Support `effect.scheduler`
+- [x] Support `effect.stop`
+- [x] Support `isReadonly`
