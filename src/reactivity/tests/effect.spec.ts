@@ -76,13 +76,24 @@ describe("effect", () => {
     obj.foo = 2;
     expect(dummy).toBe(2);
 
+    // trigger set()
     stop(runner);
     obj.foo = 3;
     expect(dummy).toBe(2);
 
+    // trigger get() and set()
+    stop(runner);
+    obj.foo++;
+    expect(dummy).toBe(2);
+
+    // trigger get() and set()
+    stop(runner);
+    obj.foo = obj.foo + 1;
+    expect(dummy).toBe(2);
+
     // stopped effect should still be manually callable.
     runner();
-    expect(dummy).toBe(3);
+    expect(dummy).toBe(5);
   });
 
   it("onStop", () => {
@@ -100,9 +111,5 @@ describe("effect", () => {
 
     stop(runner);
     expect(onStop).toHaveBeenCalled();
-  });
-
-  it("readonly", () => {
-    
   });
 });

@@ -1,9 +1,12 @@
 import { extend } from "../shared";
 
+let activeEffect;
+let shouldTrack;
+
 class ReactiveEffect {
   private _fn: any;
   deps = [];
-  active = true;
+  stopActive = true;
   onStop?: () => void;
   public scheduler: Function | undefined;
   constructor(fn, scheduler?: Function) {
@@ -12,17 +15,28 @@ class ReactiveEffect {
   }
 
   run() {
+    if (!this.stopActive) {
+      return this._fn();
+    }
+
+    // should be collected
+    shouldTrack = true;
     activeEffect = this;
-    return this._fn();
+    const r = this._fn();
+
+    // reset
+    shouldTrack = false;
+
+    return r;
   }
 
   stop() {
-    if (this.active) {
+    if (this.stopActive) {
       cleanEffect(this);
       if (this.onStop) {
         this.onStop();
       }
-      this.active = false;
+      this.stopActive = false;
     }
   }
 }
@@ -33,9 +47,16 @@ function cleanEffect(effect) {
   });
 }
 
+function isTracking() {
+  // activeEffect might have a value of `undefined` (scheduler)
+  return shouldTrack && activeEffect !== undefined;
+}
+
 // collect dependents
 const targetMap = new Map();
 export function track(target, key) {
+  if (!isTracking()) return;
+
   // target-depsMap --> key-dep ---> {functions}s
   let depsMap = targetMap.get(target);
   if (!depsMap) {
@@ -49,9 +70,7 @@ export function track(target, key) {
     depsMap.set(key, dep);
   }
 
-  // activeEffect might have a value of `undefined` (scheduler)
-  if (!activeEffect) return;
-
+  if (dep.has(activeEffect)) return;
   dep.add(activeEffect);
   activeEffect.deps.push(dep);
 }
@@ -70,7 +89,6 @@ export function trigger(target, key) {
   }
 }
 
-let activeEffect;
 export function effect(fn, options: any = {}) {
   const _effect = new ReactiveEffect(fn, options.scheduler);
   // extend options
