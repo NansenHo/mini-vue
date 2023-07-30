@@ -1,4 +1,8 @@
-import { mutableHandlers, readonlyHandlers } from "./baseHandlers";
+import {
+  mutableHandlers,
+  readonlyHandlers,
+  shallowReadonlyHanders,
+} from "./baseHandlers";
 
 // Using functions to encapsulate certain operations can enhance the readability of the codes.
 function createActiveObject(raw, baseHandlers) {
@@ -24,4 +28,8 @@ export function reactive(raw) {
 
 export function readonly(raw) {
   return createActiveObject(raw, readonlyHandlers);
+}
+
+export function shallowReadonly(raw) {
+  return createActiveObject(raw, shallowReadonlyHanders);
 }
