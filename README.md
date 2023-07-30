@@ -23,3 +23,6 @@ We should focus on the core logic, and the purpose of this library is to strip o
 - [x] Support `effect.scheduler`
 - [x] Support `effect.stop`
 - [x] Support `isReadonly`
+- [x] Support `isReactive`
+- [x] Support nested `reactive`
+- [x] Support nested `readonly`

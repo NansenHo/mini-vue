@@ -45,10 +45,12 @@ function cleanEffect(effect) {
   effect.deps.forEach((dep: any) => {
     dep.delete(effect);
   });
+  effect.deps.length = 0;
 }
 
 function isTracking() {
   // activeEffect might have a value of `undefined` (scheduler)
+  // !shouldTrack || !activeEffect
   return shouldTrack && activeEffect !== undefined;
 }
 
