@@ -15,11 +15,17 @@ export const enum ReactiveFlags {
 }
 
 export function isReactive(value) {
+  // trigger one `get` operation
   return !!value[ReactiveFlags.IS_REACTIVE];
 }
 
 export function isReadonly(value) {
+  // trigger one `get` operation
   return !!value[ReactiveFlags.IS_READONLY];
+}
+
+export function isProxy(value) {
+  return isReactive(value) || isReadonly(value);
 }
 
 export function reactive(raw) {
