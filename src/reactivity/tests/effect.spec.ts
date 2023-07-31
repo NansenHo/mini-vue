@@ -10,6 +10,7 @@ describe("effect", () => {
     });
 
     let nextAge;
+    // dependencies collection
     effect(() => {
       nextAge = user.age + 1;
     });
