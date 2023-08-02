@@ -17,6 +17,7 @@ We should focus on the core logic, and the purpose of this library is to strip o
 **reactivity**
 
 - [x] Implementation of `reactive`
+- [x] Implementation of `ref`
 - [x] `track` dependencies collection
 - [x] `trigger` dependencies triggering
 - [x] `effect` return `runner` function
@@ -26,3 +27,5 @@ We should focus on the core logic, and the purpose of this library is to strip o
 - [x] Support `isReactive`
 - [x] Support nested `reactive`
 - [x] Support nested `readonly`
+- [x] Support `isRef`
+- [x] Support `unRef`

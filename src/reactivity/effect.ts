@@ -77,6 +77,8 @@ export function track(target, key) {
 
 export function trackEffects(dep) {
   if (dep.has(activeEffect)) return;
+  // A `dep` can have multiple `activeEffect`s,
+  // and a `activeEffect` can be associated with multiple `dep`s.
   dep.add(activeEffect);
   activeEffect.deps.push(dep);
 }
