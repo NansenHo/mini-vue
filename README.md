@@ -30,3 +30,4 @@ We should focus on the core logic, and the purpose of this library is to strip o
 - [x] Support `isRef`
 - [x] Support `unRef`
 - [x] Support `proxyRefs`
+- [x] Implementation of `computed`
