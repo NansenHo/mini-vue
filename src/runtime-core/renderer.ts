@@ -5,7 +5,9 @@ export function render(vnode, container) {
 }
 
 function patch(vnode, container) {
+	// component
   processComponent(vnode, container);
+	//TODO if vnode is a element
 }
 
 function processComponent(vnode: any, container: any) {
