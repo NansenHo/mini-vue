@@ -40,15 +40,15 @@ We should focus on the core logic, and the purpose of this library is to strip o
 
 - [x] Support component
 - [x] Support element
-- [x] Access the object returned by `setup` within the `render` function
 - [ ] init props
 - [ ] `setup` function can access both `props` and `context`
 - [ ] Support component `emit`
 - [ ] Support proxy
+- [x] Access the object returned by `setup` within the `render` function
 - [ ] Implementation of `nextTick`
 - [ ] Support `getCurrentInstance`
 - [ ] Support `provide` / `inject`
 - [ ] Support basic `slots`
 - [ ] Support text node
-- [ ] Support `$el` api
+- [x] Support `$el` api
 - [ ] Support `watchEffect`

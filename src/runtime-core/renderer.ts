@@ -26,19 +26,22 @@ function processComponent(vnode: any, container: any) {
 function mountComponent(vnode: any, container) {
   const instance = createComponentInstance(vnode);
   setupComponent(instance);
-  setupRenderEffect(instance, container);
+  setupRenderEffect(instance, vnode, container);
 }
 
-function setupRenderEffect(instance: any, container) {
-  const proxy = instance.proxy;
+function setupRenderEffect(instance: any, vnode, container) {
+  const { proxy } = instance;
   const subTree = instance.render.call(proxy);
+
   patch(subTree, container);
+
+  vnode.el = subTree.el;
 }
 
 function mountElement(vnode: any, container: any) {
   const { props, children } = vnode;
   // type
-  const el = document.createElement(vnode.type);
+  const el = (vnode.el = document.createElement(vnode.type));
 
   // props
   for (const key in props) {
