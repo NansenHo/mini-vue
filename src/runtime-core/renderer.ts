@@ -30,7 +30,8 @@ function mountComponent(vnode: any, container) {
 }
 
 function setupRenderEffect(instance: any, container) {
-  const subTree = instance.render();
+  const proxy = instance.proxy;
+  const subTree = instance.render.call(proxy);
   patch(subTree, container);
 }
 

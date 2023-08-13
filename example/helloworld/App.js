@@ -8,14 +8,14 @@ export const App = {
       h(
         "p",
         {
-          class: "blue",
+          class: "",
         },
-        "hello!"
+        this.msg
       ),
       h(
         "p",
         {
-          class: "yellow",
+          class: "blue",
         },
         "mini-vue"
       ),
@@ -25,7 +25,7 @@ export const App = {
   setup() {
     // composition api
     return {
-      msg: "mini-vue",
+      msg: "mini-vue-hello",
     };
   },
 };
