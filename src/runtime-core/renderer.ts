@@ -1,14 +1,16 @@
 import { isObject } from "../shared/index";
 import { createComponentInstance, setupComponent } from "./component";
+import { ShapeFlags } from "../shared/shapeFlags";
 
 export function render(vnode, container) {
   patch(vnode, container);
 }
 
 function patch(vnode, container) {
-  if (typeof vnode.type === "string") {
+  const { shapeFlag } = vnode;
+  if (shapeFlag & ShapeFlags.ELEMENT) {
     processElement(vnode, container);
-  } else if (isObject(vnode.type)) {
+  } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
     processComponent(vnode, container);
   }
 }
@@ -29,33 +31,36 @@ function mountComponent(vnode: any, container) {
   setupRenderEffect(instance, vnode, container);
 }
 
-function setupRenderEffect(instance: any, vnode, container) {
+function mountElement(initialVNode: any, container: any) {
+  const { props, children } = initialVNode;
+
+  // type
+  const el = (initialVNode.el = document.createElement(initialVNode.type));
+
+  // props
+  for (const key in props) {
+    const val = props[key];
+    el.setAttribute(key, val);
+  }
+
+  const { shapeFlag } = initialVNode;
+  // children
+  if (shapeFlag & ShapeFlags.TEXT_CHILDREN) {
+    el.textContent = children;
+  } else if (shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
+    mountChildren(children, el);
+  }
+
+  container.append(el);
+}
+
+function setupRenderEffect(instance: any, initialVNode, container) {
   const { proxy } = instance;
   const subTree = instance.render.call(proxy);
 
   patch(subTree, container);
 
-  vnode.el = subTree.el;
-}
-
-function mountElement(vnode: any, container: any) {
-  const { props, children } = vnode;
-  // type
-  const el = (vnode.el = document.createElement(vnode.type));
-
-  // props
-  for (const key in props) {
-    el.setAttribute(key, props[key]);
-  }
-
-  // children
-  if (typeof children === "string") {
-    el.textContent = children;
-  } else if (Array.isArray(children)) {
-    mountChildren(children, el);
-  }
-
-  container.append(el);
+  initialVNode.el = subTree.el;
 }
 
 function mountChildren(children, container) {

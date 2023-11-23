@@ -2,7 +2,7 @@
 
 Implementing a minimal vue3 model for learning Vue3 in depth.
 
-> This repo comes with [notes](notes) to record what I was thinking and what I learned from studying mini-vue.
+> This repo comes with [notes]() to record what I was thinking and what I learned from studying mini-vue.
 
 ## Why
 
@@ -13,8 +13,6 @@ But there is a lot of logic in the Vue 3 source code, which is used to deal with
 We should focus on the core logic, and the purpose of this library is to strip out the core logic in the Vue 3 source code, leaving only the core logic.
 
 ## How This Repository Helps You
-
-
 
 ## Tasking
 
