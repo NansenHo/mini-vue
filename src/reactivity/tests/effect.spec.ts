@@ -1,5 +1,6 @@
 // You need to use Babel to transpile ES6 Modules into CommonJS Modules in NodeJS
 // Detail: https://jestjs.io/docs/getting-started#using-babel
+import { describe, it, expect, vi } from "vitest";
 import { reactive } from "../reactive";
 import { effect, stop } from "../effect";
 
@@ -42,7 +43,7 @@ describe("effect", () => {
     let dummy;
     let run: any;
     const obj = reactive({ foo: 1 });
-    const scheduler = jest.fn(() => {
+    const scheduler = vi.fn(() => {
       run = runner;
     });
     const runner = effect(
@@ -99,7 +100,7 @@ describe("effect", () => {
 
   it("onStop", () => {
     let dummy;
-    let onStop = jest.fn();
+    let onStop = vi.fn();
     const obj = reactive({ foo: 1 });
     const runner = effect(
       () => {

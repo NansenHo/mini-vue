@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from "vitest";
 import { isReadonly, readonly, isProxy } from "../reactive";
 
 describe("readonly", () => {
@@ -17,7 +18,7 @@ describe("readonly", () => {
   });
 
   it("receive a warning when attempting to modify a read-only object", () => {
-    console.warn = jest.fn();
+    console.warn = vi.fn();
     const obj = readonly({ foo: 1 });
     obj.foo++;
     expect(console.warn).toHaveBeenCalled();

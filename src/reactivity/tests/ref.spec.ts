@@ -1,6 +1,7 @@
 import { effect } from "../effect";
 import { reactive } from "../reactive";
 import { isRef, proxyRefs, ref, unRef } from "../ref";
+import { describe, it, expect } from "vitest";
 
 describe("ref", () => {
   it("happy path", () => {

@@ -14,6 +14,12 @@ We should focus on the core logic, and the purpose of this library is to strip o
 
 ## How This Repository Helps You
 
+## Tech Stack
+
+- TypeScript
+- Vitest
+- Rollup
+
 ## Tasking
 
 **reactivity**

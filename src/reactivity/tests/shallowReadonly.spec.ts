@@ -1,3 +1,4 @@
+import { describe, it, expect, vi } from "vitest";
 import { isReadonly, shallowReadonly } from "../reactive";
 
 describe("shallowReadonly", () => {
@@ -9,7 +10,7 @@ describe("shallowReadonly", () => {
   });
 
   it("receive a warning when attempting to modify a shallowReadonly object", () => {
-    console.warn = jest.fn();
+    console.warn = vi.fn();
     const obj = shallowReadonly({ foo: 1 });
     obj.foo++;
     expect(console.warn).toHaveBeenCalled();
