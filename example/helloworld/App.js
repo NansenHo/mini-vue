@@ -11,16 +11,22 @@ export const App = {
       h(
         "p",
         {
-          class: "",
+          class: "yellow",
+          onMouseover: () => {
+            alert("mouse over");
+          },
         },
         this.msg
       ),
       h(
         "p",
         {
+          onClick: () => {
+            alert("click");
+          },
           class: "blue",
         },
-        "mini-vue"
+        "Please click the blue text!"
       ),
     ]);
   },
@@ -28,7 +34,7 @@ export const App = {
   setup() {
     // composition api
     return {
-      msg: "mini-vue-hello-world",
+      msg: "Please mouse over the yellow text!",
     };
   },
 };
