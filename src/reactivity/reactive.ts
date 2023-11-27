@@ -1,7 +1,7 @@
 import {
   mutableHandlers,
   readonlyHandlers,
-  shallowReadonlyHanders,
+  shallowReadonlyHandlers,
 } from "./baseHandlers";
 
 // Using functions to encapsulate certain operations can enhance the readability of the codes.
@@ -37,5 +37,5 @@ export function readonly(raw) {
 }
 
 export function shallowReadonly(raw) {
-  return createActiveObject(raw, shallowReadonlyHanders);
+  return createActiveObject(raw, shallowReadonlyHandlers);
 }

@@ -63,6 +63,6 @@ export const readonlyHandlers = {
   },
 };
 
-export const shallowReadonlyHanders = extend({}, readonlyHandlers, {
+export const shallowReadonlyHandlers = extend({}, readonlyHandlers, {
   get: shallowReadonlyGet,
 });

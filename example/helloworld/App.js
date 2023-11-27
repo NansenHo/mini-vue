@@ -1,8 +1,10 @@
 // App component
 import { h } from "../../lib/mini-vue.esm.js";
+import { Foo } from "./Foo.js";
 
 window.self = undefined;
 export const App = {
+  name: "App",
   render() {
     // execute `self.$el` in the browser console.
     window.self = this;
@@ -28,6 +30,8 @@ export const App = {
         },
         "Please click the blue text!"
       ),
+      h("div", {}, "hi,", this.component),
+      h(Foo, { count: 1 }),
     ]);
   },
 
@@ -35,6 +39,7 @@ export const App = {
     // composition api
     return {
       msg: "Please mouse over the yellow text!",
+      component: "Foo",
     };
   },
 };
