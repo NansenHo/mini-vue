@@ -8,11 +8,13 @@ export default {
     {
       format: "cjs",
       file: pkg.main,
+      sourcemap: true,
     },
     // ESM
     {
       format: "es",
       file: pkg.module,
+      sourcemap: true,
     },
   ],
   plugins: [typescript()],

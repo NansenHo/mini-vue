@@ -6,6 +6,7 @@ export function render(vnode, container) {
 }
 
 function patch(vnode, container) {
+  console.log("vnode =>", vnode);
   const { shapeFlag } = vnode;
   if (shapeFlag & ShapeFlags.ELEMENT) {
     processElement(vnode, container);

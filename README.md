@@ -2,7 +2,7 @@
 
 Implementing a minimal vue3 model for learning Vue3 in depth.
 
-> This repo comes with [notes]() to record what I was thinking and what I learned from studying mini-vue.
+> This repo comes with [notes](https://til-nansenho.netlify.app/docs/vue/mini-vue/effect_reactive_dependenciesCollection_dependenciesTriggering/dependenciesCollection_dependenciesTriggering) to record what I was thinking and what I learned from studying mini-vue.
 
 ## Why
 
