@@ -1,4 +1,5 @@
 import { createComponentInstance, setupComponent } from "./component";
+import { Fragment } from "./vnode";
 import { ShapeFlags } from "../shared/shapeFlags";
 
 export function render(vnode, container) {
@@ -7,12 +8,25 @@ export function render(vnode, container) {
 
 function patch(vnode, container) {
   console.log("vnode =>", vnode);
-  const { shapeFlag } = vnode;
-  if (shapeFlag & ShapeFlags.ELEMENT) {
-    processElement(vnode, container);
-  } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
-    processComponent(vnode, container);
+  const { type, shapeFlag } = vnode;
+
+  switch (type) {
+    // Fragment: only renders its children
+    case Fragment:
+      processFragment(vnode, container);
+      break;
+    default:
+      if (shapeFlag & ShapeFlags.ELEMENT) {
+        processElement(vnode, container);
+      } else if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) {
+        processComponent(vnode, container);
+      }
+      break;
   }
+}
+
+function processFragment(vnode: any, container: any) {
+  mountChildren(vnode.children, container);
 }
 
 function processElement(vnode: any, container: any) {

@@ -1,4 +1,4 @@
-import { createVNode } from "../vnode";
+import { createVNode, Fragment } from "../vnode";
 
 export function renderSlots(slots, name, props) {
   console.log("slot props =>", props);
@@ -9,6 +9,6 @@ export function renderSlots(slots, name, props) {
   if (slot && typeof slot === "function") {
     console.log("slot(props) =>", slot(props));
 
-    return createVNode("div", {}, slot(props));
+    return createVNode(Fragment, {}, slot(props));
   }
 }
