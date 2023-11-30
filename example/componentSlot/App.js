@@ -1,4 +1,4 @@
-import { h } from "../../lib/mini-vue.esm.js";
+import { h, createTextVnode } from "../../lib/mini-vue.esm.js";
 import { Foo } from "./Foo.js";
 
 export const App = {
@@ -12,7 +12,10 @@ export const App = {
     // - 我们期望 slotsContent1 被渲染在 header 插槽中，slotsContent2 被渲染在 footer 插槽中
     // 作用域插槽:
     // - 我们期望在 Foo 组件里定义的 age 可以在 App 组件里使用
-    const slotsContent = (age) => h("p", {}, "12" + age);
+    const slotsContent = (age) => [
+      h("p", {}, "12" + age),
+      createTextVnode("你好啊"),
+    ];
     const foo = h(
       Foo,
       {},
