@@ -26,6 +26,15 @@ export function setupComponent(instance) {
   setupStatefulComponent(instance);
 }
 
+export function getCurrentInstance() {
+  return currentInstance;
+}
+
+let currentInstance = null;
+function setCurrentInstance(instance) {
+  currentInstance = instance;
+}
+
 function setupStatefulComponent(instance: any) {
   console.log("instance =>", instance);
   const Component = instance.type;
@@ -37,9 +46,11 @@ function setupStatefulComponent(instance: any) {
   const { setup } = Component;
 
   if (setup) {
+    setCurrentInstance(instance);
     const setupResult = setup(shallowReadonly(instance.props), {
       emit: instance.emit,
     });
+    setCurrentInstance(null);
 
     handleSetupResult(instance, setupResult);
   }
