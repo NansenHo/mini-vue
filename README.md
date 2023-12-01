@@ -22,7 +22,7 @@ We should focus on the core logic, and the purpose of this library is to strip o
 
 ## Tasking
 
-**reactivity**
+**reactivity**:
 
 - [x] Implementation of `reactive`
 - [x] Implementation of `ref`
@@ -40,19 +40,19 @@ We should focus on the core logic, and the purpose of this library is to strip o
 - [x] Support `proxyRefs`
 - [x] Implementation of `computed`
 
-**runtime-core**
+**runtime-core**:
 
 - [x] Support component
 - [x] Support element
 - [x] Access the object returned by `setup` within the `render` function
 - [x] Support `$el` api
 - [x] init props (including events)
+- [x] Support basic `slots`
 - [x] Support component `emit`
-- [ ] `setup` function can access both `props` and `context`
+- [x] Support `provide` / `inject`
+- [x] `setup` function can access both `props` and `context`
+- [x] Support `getCurrentInstance`
+- [x] Support text node
 - [ ] Support proxy
 - [ ] Implementation of `nextTick`
-- [ ] Support `getCurrentInstance`
-- [ ] Support `provide` / `inject`
-- [ ] Support basic `slots`
-- [ ] Support text node
 - [ ] Support `watchEffect`

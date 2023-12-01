@@ -4,13 +4,15 @@ import { initProps } from "./componentProps";
 import { PublicInstanceProxyHandlers } from "./componentPublicInstance";
 import { initSlots } from "./componentSlots";
 
-export function createComponentInstance(vnode) {
+export function createComponentInstance(vnode, parent) {
   const component = {
     vnode,
     type: vnode.type,
     setupState: {},
     props: {},
     slots: {},
+    provides: parent?.provides || {},
+    parent,
     emit: () => {},
   };
 
@@ -36,9 +38,9 @@ function setCurrentInstance(instance) {
 }
 
 function setupStatefulComponent(instance: any) {
-  console.log("instance =>", instance);
+  console.log("setupStatefulComponent instance =>", instance);
   const Component = instance.type;
-  console.log("Component =>", Component);
+  console.log("setupStatefulComponent Component =>", Component);
 
   // context
   instance.proxy = new Proxy({ _: instance }, PublicInstanceProxyHandlers);
