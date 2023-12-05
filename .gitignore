@@ -1,2 +1,4 @@
 node_modules/
 .vscode/
+.trunk/
+**/.DS_Store
