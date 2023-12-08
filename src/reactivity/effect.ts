@@ -48,12 +48,6 @@ function cleanEffect(effect) {
   effect.deps.length = 0;
 }
 
-export function isTracking() {
-  // activeEffect might have a value of `undefined` (scheduler)
-  // !shouldTrack || !activeEffect
-  return shouldTrack && activeEffect !== undefined;
-}
-
 // collect dependents
 const targetMap = new Map();
 export function track(target, key) {
@@ -73,6 +67,12 @@ export function track(target, key) {
   }
 
   trackEffects(dep);
+}
+
+export function isTracking() {
+  // activeEffect might have a value of `undefined` (scheduler)
+  // !shouldTrack || !activeEffect
+  return shouldTrack && activeEffect !== undefined;
 }
 
 export function trackEffects(dep) {

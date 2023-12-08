@@ -49,10 +49,11 @@ We should focus on the core logic, and the purpose of this library is to strip o
 - [x] init props (including events)
 - [x] Support basic `slots`
 - [x] Support component `emit`
-- [x] Support `provide` / `inject`
 - [x] `setup` function can access both `props` and `context`
+- [x] Support `provide` / `inject`
 - [x] Support `getCurrentInstance`
 - [x] Support text node
+- [x] Update props
 - [ ] Support proxy
 - [ ] Implementation of `nextTick`
 - [ ] Support `watchEffect`
