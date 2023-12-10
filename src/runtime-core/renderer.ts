@@ -149,6 +149,9 @@ export function createRenderer(options) {
     parentComponent,
     parentAnchor
   ) {
+    console.log("c1 =>", c1);
+    console.log("c2 =>", c2);
+
     const l2 = c2.length;
     let e1 = c1.length - 1;
     let e2 = l2 - 1;
@@ -158,7 +161,7 @@ export function createRenderer(options) {
       return n1.type === n2.type && n1.key === n2.key;
     }
 
-    // left
+    // left i
     while (i <= e1 && i <= e2) {
       const prevChild = c1[i];
       const nextChild = c2[i];
@@ -171,7 +174,7 @@ export function createRenderer(options) {
       i++;
     }
 
-    // right
+    // right e1 e2
     while (e1 >= 0 && e2 >= 0) {
       const prevChild = c1[e1];
       const nextChild = c2[e2];
@@ -188,8 +191,6 @@ export function createRenderer(options) {
     console.log("i =>", i);
     console.log("e1 =>", e1);
     console.log("e2 =>", e2);
-    console.log("l2 =>", l2);
-    console.log("c1.length =>", c1.length);
 
     if (i > e1 && i <= e2) {
       const nextPosition = e2 + 1;
@@ -205,7 +206,42 @@ export function createRenderer(options) {
         i++;
       }
     } else {
-      console.log("else");
+      let toBePatched = e2 - i + 1;
+      let patched = 0;
+      const keyToNewIndexMap = new Map();
+
+      for (let j = i; j <= e2; j++) {
+        const newChild = c2[j];
+        keyToNewIndexMap.set(newChild.key, j);
+      }
+
+      for (let j = i; j <= e1; j++) {
+        const prevChild = c1[j];
+
+        if (patched >= toBePatched) {
+          hostRemove(prevChild.el);
+          continue;
+        }
+
+        let newIndex;
+        if (!!prevChild.key) {
+          newIndex = keyToNewIndexMap.get(prevChild.key);
+        } else {
+          for (let j = i; j < e2; j++) {
+            if (isSameVNodeType(prevChild, e2[j])) {
+              newIndex = j;
+              break;
+            }
+          }
+        }
+
+        if (!newIndex) {
+          hostRemove(prevChild.el);
+        } else {
+          patch(prevChild, c2[newIndex], container, parentComponent, null);
+          patched++;
+        }
+      }
     }
   }
 
