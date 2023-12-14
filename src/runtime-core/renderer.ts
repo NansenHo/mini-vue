@@ -5,6 +5,7 @@ import { createAppAPI } from "./createApp";
 import { effect } from "..";
 import { EMPTY_OBJ } from "src/shared";
 import { shouldUpdateComponent } from "./componentUpdateUtils";
+import { queueJob } from "./scheduler";
 
 export function createRenderer(options) {
   const {
@@ -352,31 +353,39 @@ export function createRenderer(options) {
 
   function setupRenderEffect(instance: any, initialVNode, container, anchor) {
     console.log("instance =>", instance);
-    instance.update = effect(() => {
-      const { proxy } = instance;
-      if (!instance.isMounted) {
-        const subTree = (instance.subTree = instance.render.call(proxy));
+    instance.update = effect(
+      () => {
+        const { proxy } = instance;
+        if (!instance.isMounted) {
+          const subTree = (instance.subTree = instance.render.call(proxy));
 
-        console.log("subtree =>", subTree);
+          console.log("subtree =>", subTree);
 
-        patch(null, subTree, container, instance, anchor);
+          patch(null, subTree, container, instance, anchor);
 
-        initialVNode.el = subTree.el;
+          initialVNode.el = subTree.el;
 
-        instance.isMounted = true;
-      } else {
-        const { next, vnode } = instance;
-        if (next) {
-          next.el = vnode.el;
-          updateComponentPreRender(instance, next);
+          instance.isMounted = true;
+        } else {
+          const { next, vnode } = instance;
+          if (next) {
+            next.el = vnode.el;
+            updateComponentPreRender(instance, next);
+          }
+          const subTree = instance.render.call(proxy);
+          const prevSubTree = instance.subTree;
+          instance.subTree = subTree;
+
+          patch(prevSubTree, subTree, container, instance, anchor);
         }
-        const subTree = instance.render.call(proxy);
-        const prevSubTree = instance.subTree;
-        instance.subTree = subTree;
-
-        patch(prevSubTree, subTree, container, instance, anchor);
+      },
+      {
+        scheduler() {
+          console.log("scheduler");
+          queueJob(instance.update);
+        },
       }
-    });
+    );
   }
 
   return {
