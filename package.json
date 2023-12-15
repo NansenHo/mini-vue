@@ -16,8 +16,7 @@
     "vitest": "^0.34.6"
   },
   "scripts": {
-    "test": "vitest run",
-    "test -w": "vitest watch",
+    "test": "vitest",
     "build": "rollup -c rollup.config.js"
   }
 }
