@@ -83,4 +83,4 @@ To open the `index.html` file in the `example/*` directory, it is recommended to
 
 - [x] parse interpolation
 - [x] parse element
-- [ ] parse text
+- [x] parse text

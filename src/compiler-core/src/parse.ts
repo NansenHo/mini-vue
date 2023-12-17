@@ -29,8 +29,13 @@ function parseChildren(context) {
   let node;
   if (isValidBraceFormat(s)) {
     node = parseInterpolation(context);
-  } else if (s[0] === "<") {
+  } else if (isValidElement(s)) {
     node = parseElement(context);
+  }
+
+  // default
+  if (!node) {
+    node = parseText(context);
   }
 
   nodes.push(node);
@@ -40,6 +45,10 @@ function parseChildren(context) {
 
 function isValidBraceFormat(content: string): boolean {
   return content.startsWith("{{") && content.includes("}}");
+}
+
+function isValidElement(content: string): boolean {
+  return /^<[a-z]/i.test(content);
 }
 
 function parseInterpolation(context) {
@@ -54,10 +63,11 @@ function parseInterpolation(context) {
 
   advanceBy(context, openDelimiter.length);
 
-  const rawContent = context.source.slice(0, rawContentLength);
+  const rawContent = parseTextData(context, rawContentLength);
+
   const content = rawContent.trim();
 
-  advanceBy(context, rawContentLength + closeDelimiter.length);
+  advanceBy(context, closeDelimiter.length);
 
   return {
     type: NodeTypes.INTERPOLATION,
@@ -89,6 +99,23 @@ function parseTag(context: any, type: TagType) {
     type: NodeTypes.ELEMENT,
     tag,
   };
+}
+
+function parseText(context: any) {
+  const content = parseTextData(context, context.source.length);
+
+  return {
+    type: NodeTypes.TEXT,
+    content,
+  };
+}
+
+function parseTextData(context: any, length: number) {
+  const content = context.source.slice(0, length);
+
+  advanceBy(context, content.length);
+
+  return content;
 }
 
 function advanceBy(context: any, length: number) {
