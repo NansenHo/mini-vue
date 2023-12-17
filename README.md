@@ -82,5 +82,5 @@ To open the `index.html` file in the `example/*` directory, it is recommended to
 **compiler-core module**:
 
 - [x] parse interpolation
-- [ ] parse element
+- [x] parse element
 - [ ] parse text
