@@ -7,7 +7,7 @@ const enum TagType {
 
 export function baseParse(content: string) {
   const context = createParserContext(content);
-  return createRoot(parseChildren(context));
+  return createRoot(parseChildren(context, []));
 }
 
 function createParserContext(content: string): any {
@@ -22,33 +22,50 @@ function createRoot(children) {
   };
 }
 
-function parseChildren(context) {
-  const nodes: any[] = [];
+function parseChildren(context, ancestors) {
+  const nodes: any = [];
 
-  const s = context.source;
-  let node;
-  if (isValidBraceFormat(s)) {
-    node = parseInterpolation(context);
-  } else if (isValidElement(s)) {
-    node = parseElement(context);
+  while (!isEnd(context, ancestors)) {
+    let node;
+    const s = context.source;
+    if (s.startsWith("{{")) {
+      node = parseInterpolation(context);
+    } else if (s[0] === "<") {
+      if (/[a-z]/i.test(s[1])) {
+        node = parseElement(context, ancestors);
+      }
+    }
+
+    if (!node) {
+      node = parseText(context);
+    }
+
+    nodes.push(node);
   }
-
-  // default
-  if (!node) {
-    node = parseText(context);
-  }
-
-  nodes.push(node);
 
   return nodes;
 }
 
-function isValidBraceFormat(content: string): boolean {
-  return content.startsWith("{{") && content.includes("}}");
+function isEnd(context, ancestors) {
+  const s = context.source;
+
+  if (s.startsWith("</")) {
+    for (let i = ancestors.length - 1; i >= 0; i--) {
+      const tag = ancestors[i].tag;
+      if (startsWithEndTagOpen(s, tag)) {
+        return true;
+      }
+    }
+  }
+
+  return !s;
 }
 
-function isValidElement(content: string): boolean {
-  return /^<[a-z]/i.test(content);
+function startsWithEndTagOpen(source, tag) {
+  return (
+    source.startsWith("</") &&
+    source.slice(2, 2 + tag.length).toLowerCase() === tag.toLowerCase()
+  );
 }
 
 function parseInterpolation(context) {
@@ -59,9 +76,10 @@ function parseInterpolation(context) {
     closeDelimiter,
     openDelimiter.length
   );
-  const rawContentLength = closeIndex - openDelimiter.length;
 
   advanceBy(context, openDelimiter.length);
+
+  const rawContentLength = closeIndex - openDelimiter.length;
 
   const rawContent = parseTextData(context, rawContentLength);
 
@@ -73,15 +91,22 @@ function parseInterpolation(context) {
     type: NodeTypes.INTERPOLATION,
     content: {
       type: NodeTypes.SIMPLE_EXPRESSION,
-      content,
+      content: content,
     },
   };
 }
 
-function parseElement(context) {
-  const element = parseTag(context, TagType.Start);
+function parseElement(context: any, ancestors) {
+  const element: any = parseTag(context, TagType.Start);
+  ancestors.push(element);
+  element.children = parseChildren(context, ancestors);
+  ancestors.pop();
 
-  parseTag(context, TagType.End);
+  if (startsWithEndTagOpen(context.source, element.tag)) {
+    parseTag(context, TagType.End);
+  } else {
+    throw new Error(`Error: the ${element.tag} tag is missing a closing tag.`);
+  }
 
   return element;
 }
@@ -89,7 +114,6 @@ function parseElement(context) {
 function parseTag(context: any, type: TagType) {
   const match: any = /^<\/?([a-z]*)/i.exec(context.source);
   const tag = match[1];
-
   advanceBy(context, match[0].length);
   advanceBy(context, 1);
 
@@ -102,7 +126,17 @@ function parseTag(context: any, type: TagType) {
 }
 
 function parseText(context: any) {
-  const content = parseTextData(context, context.source.length);
+  let endIndex = context.source.length;
+  let endToken = ["{{", "<"];
+
+  for (let i = 0; i < endToken.length; i++) {
+    let index = context.source.indexOf(endToken[i]);
+    if (index !== -1 && index < endIndex) {
+      endIndex = index;
+    }
+  }
+
+  const content = parseTextData(context, endIndex);
 
   return {
     type: NodeTypes.TEXT,
@@ -110,10 +144,10 @@ function parseText(context: any) {
   };
 }
 
-function parseTextData(context: any, length: number) {
+function parseTextData(context: any, length) {
   const content = context.source.slice(0, length);
 
-  advanceBy(context, content.length);
+  advanceBy(context, length);
 
   return content;
 }
