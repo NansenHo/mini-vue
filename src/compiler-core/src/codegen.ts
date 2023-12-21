@@ -31,7 +31,7 @@ function genFunctionPreamble(ast, context) {
 
   const { helpers } = ast;
   if (helpers.length > 0) {
-    push(`const ${helpers.map(aliasHelper).join(", ")} = ${VueBinging}`);
+    push(`const { ${helpers.map(aliasHelper).join(", ")} } = ${VueBinging}`);
   }
 
   push("\n");
