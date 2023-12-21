@@ -1,8 +1,10 @@
-export function transform(root, options) {
+export function transform(root, options = {}) {
   const context = createTransformContext(root, options);
 
   // Depth-First Search: DFS
   traverseNode(root, context);
+
+  createRootCodegen(root);
 }
 
 function createTransformContext(root: any, options: any) {
@@ -33,4 +35,8 @@ function traverseChildren(node, context) {
       traverseNode(node, context);
     }
   }
+}
+
+function createRootCodegen(root) {
+  root.codegenNode = root.children[0];
 }
