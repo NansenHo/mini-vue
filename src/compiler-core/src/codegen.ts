@@ -1,3 +1,4 @@
+import { isString } from "src/shared";
 import { NodeTypes } from "./ast";
 import {
   CREATE_ELEMENT_BLOCK,
@@ -71,6 +72,10 @@ function genNode(node, context) {
       genElement(node, context);
       break;
 
+    case NodeTypes.COMPOUND_EXPRESSION:
+      genCompoundExpression(node, context);
+      break;
+
     default:
       break;
   }
@@ -78,7 +83,7 @@ function genNode(node, context) {
 
 function genText(node, context) {
   const { push } = context;
-  push(`'${node.content}'`);
+  push(`"${node.content}"`);
 }
 
 function genInterpolation(node, context) {
@@ -95,6 +100,65 @@ function genExpression(node, context) {
 
 function genElement(node, context) {
   const { push, helper } = context;
-  const { tag } = node;
-  push(`(_${helper(CREATE_ELEMENT_BLOCK)}("${tag}"))`);
+  const { tag, children, props } = node;
+
+  push(`(_${helper(CREATE_ELEMENT_BLOCK)}(`);
+
+  const filteredNodes = removeLastNull(genNullable([tag, props, children]));
+
+  genNodeList(filteredNodes, context);
+
+  push(")");
+}
+
+function genNullable(nodes) {
+  return nodes.map((node) => node || "null");
+}
+
+function removeLastNull(nodes) {
+  let i = nodes.length;
+
+  while (i--) {
+    if (nodes[i] === "null") {
+      nodes.pop();
+    } else {
+      break;
+    }
+  }
+
+  return nodes;
+}
+
+function genNodeList(nodes, context) {
+  const { push } = context;
+
+  for (let i = 0; i < nodes.length; i++) {
+    console.log(nodes);
+    const node = nodes[i];
+    if (isString(node)) {
+      push(node);
+    } else {
+      genNode(node, context);
+    }
+
+    if (i < nodes.length - 1) {
+      push(", ");
+    }
+  }
+
+  push(")");
+}
+
+function genCompoundExpression(node, context) {
+  const { children } = node;
+  const { push } = context;
+
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i];
+    if (isString(child)) {
+      push(child);
+    } else {
+      genNode(child, context);
+    }
+  }
 }
