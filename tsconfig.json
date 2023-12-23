@@ -13,6 +13,10 @@
     "sourceMap": true,
     "downlevelIteration": true,
     "lib": ["esnext", "DOM"],
-    "types": ["vitest/globals"]
-  }
+    "types": ["vitest/globals"],
+    "paths": {
+      "@mini-vue/*": ["./packages/*/src"]
+    }
+  },
+  "include": ["packages/*/src", "packages/*/__tests__"]
 }
