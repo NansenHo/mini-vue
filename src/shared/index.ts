@@ -1,4 +1,5 @@
 export const extend = Object.assign;
+export * from "./toDisplayString";
 
 export const EMPTY_OBJ = {};
 

@@ -45,7 +45,7 @@ export function ref(value) {
 }
 
 export function isRef(ref) {
-  return !!ref.__v_isRef;
+  return !!ref?.__v_isRef;
 }
 
 export function unRef(ref) {

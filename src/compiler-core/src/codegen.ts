@@ -133,7 +133,6 @@ function genNodeList(nodes, context) {
   const { push } = context;
 
   for (let i = 0; i < nodes.length; i++) {
-    console.log(nodes);
     const node = nodes[i];
     if (isString(node)) {
       push(node);

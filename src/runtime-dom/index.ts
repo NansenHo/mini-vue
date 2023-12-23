@@ -1,3 +1,4 @@
+export * from "../runtime-core";
 import { createRenderer } from "src/runtime-core";
 
 function createElement(type) {
@@ -45,5 +46,3 @@ const renderer: any = createRenderer({
 export function createApp(...arg) {
   return renderer.createApp(...arg);
 }
-
-export * from "../runtime-core";
