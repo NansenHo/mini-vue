@@ -2,7 +2,7 @@
 
 # Mini Vue
 
-为了深入学习 Vue3，本仓库实现了一个简化版的 Vue3。
+为了深入学习 Vue3，本仓库基于 [TDD（测试驱动开发）](https://zh.wikipedia.org/zh-cn/%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91)和 [TPP（变换优先原则）](https://en.wikipedia.org/wiki/Transformation_Priority_Premise)实现了一个简化版的 Vue3 模型。
 
 > 你可以在[这里](https://til-nansenho.netlify.app/docs/vue/mini-vue/effect_reactive_dependenciesCollection_dependenciesTriggering/dependenciesCollection_dependenciesTriggering)查看笔记。
 >

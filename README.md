@@ -2,7 +2,7 @@
 
 # Mini Vue
 
-Implementing a minimal vue3 model for learning Vue3 in depth.
+Implementing a minimal vue3 model based on [TDD (Test-Driven Development)](https://en.wikipedia.org/wiki/Test-driven_development) and [TPP (Transformation Priority Premise)](https://en.wikipedia.org/wiki/Transformation_Priority_Premise) for learning Vue3 in depth.
 
 > This repo comes with [notes](https://til-nansenho.netlify.app/docs/vue/mini-vue/effect_reactive_dependenciesCollection_dependenciesTriggering/dependenciesCollection_dependenciesTriggering) to record what I was thinking and what I learned from studying mini-vue.
 

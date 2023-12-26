@@ -2,7 +2,7 @@
 
 # Mini Vue
 
-このリポジトリは Vue3 の学習を深めるために、Vue3 の簡略版を実装しています。
+このリポジトリは Vue3 の学習を深めるために、[TDD（テスト駆動開発）](https://ja.wikipedia.org/wiki/%E3%83%86%E3%82%B9%E3%83%88%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA)と [TPP（変換優先原則）](https://en.wikipedia.org/wiki/Transformation_Priority_Premise)に基づいて、Vue3 の簡略版を実装しています。
 
 > [ここ](https://til-nansenho.netlify.app/docs/vue/mini-vue/effect_reactive_dependenciesCollection_dependenciesTriggering/dependenciesCollection_dependenciesTriggering)でノートを見ることができます。
 >
