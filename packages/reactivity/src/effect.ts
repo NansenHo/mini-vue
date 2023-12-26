@@ -71,7 +71,6 @@ export function track(target, key) {
 
 export function isTracking() {
   // activeEffect might have a value of `undefined` (scheduler)
-  // !shouldTrack || !activeEffect
   return shouldTrack && activeEffect !== undefined;
 }
 

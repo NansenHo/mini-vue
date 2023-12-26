@@ -59,7 +59,7 @@ To open the `index.html` file in the `example/*` directory, it is recommended to
 - [x] Support text node
 - [x] Update `props`
 - [x] Implementation of `nextTick`
-- [ ] Support `watchEffect`
+- [x] Support `watchEffect`
 
 **reactivity module**:
 
@@ -84,3 +84,8 @@ To open the `index.html` file in the `example/*` directory, it is recommended to
 - [x] parse interpolation
 - [x] parse element
 - [x] parse text
+
+## Links
+
+- [Vue.js Contributing Guide](https://github.com/vuejs/core/blob/main/.github/contributing.md)
+- []

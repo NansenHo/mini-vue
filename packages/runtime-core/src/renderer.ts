@@ -4,7 +4,7 @@ import { ShapeFlags, EMPTY_OBJ } from "@mini-vue/shared";
 import { createAppAPI } from "./createApp";
 import { effect } from "@mini-vue/reactivity";
 import { shouldUpdateComponent } from "./componentUpdateUtils";
-import { queueJob } from "./scheduler";
+import { queueJobs } from "./scheduler";
 
 export function createRenderer(options) {
   const {
@@ -351,17 +351,16 @@ export function createRenderer(options) {
   }
 
   function setupRenderEffect(instance: any, initialVNode, container, anchor) {
-    console.log("instance =>", instance);
     instance.update = effect(
       () => {
         const { proxy } = instance;
+
         if (!instance.isMounted) {
+          console.log("init");
           const subTree = (instance.subTree = instance.render.call(
             proxy,
             proxy
           ));
-
-          console.log("subtree =>", subTree);
 
           patch(null, subTree, container, instance, anchor);
 
@@ -369,6 +368,7 @@ export function createRenderer(options) {
 
           instance.isMounted = true;
         } else {
+          console.log("update");
           const { next, vnode } = instance;
 
           if (next) {
@@ -386,8 +386,7 @@ export function createRenderer(options) {
       },
       {
         scheduler() {
-          console.log("scheduler");
-          queueJob(instance.update);
+          queueJobs(instance.update);
         },
       }
     );

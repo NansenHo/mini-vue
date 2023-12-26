@@ -483,13 +483,14 @@ function shouldUpdateComponent(n1, n2) {
     return false;
 }
 
+const queue = [];
+const activePreFlushCbs = [];
 let isFlushPending = false;
 const p = Promise.resolve();
-const queue = [];
 function nextTick(fn) {
     return fn ? p.then(fn) : p;
 }
-function queueJob(job) {
+function queueJobs(job) {
     if (!queue.includes(job)) {
         queue.push(job);
     }
@@ -504,10 +505,15 @@ function queueFlush() {
 }
 function flushJobs() {
     isFlushPending = false;
+    flushPreFlushCbs();
     let job;
     while ((job = queue.shift())) {
-        console.log("1");
         job && job();
+    }
+}
+function flushPreFlushCbs() {
+    for (let i = 0; i < activePreFlushCbs.length; i++) {
+        activePreFlushCbs[i]();
     }
 }
 
@@ -772,17 +778,17 @@ function createRenderer(options) {
         setupRenderEffect(instance, vnode, container, anchor);
     }
     function setupRenderEffect(instance, initialVNode, container, anchor) {
-        console.log("instance =>", instance);
         instance.update = effect(() => {
             const { proxy } = instance;
             if (!instance.isMounted) {
+                console.log("init");
                 const subTree = (instance.subTree = instance.render.call(proxy, proxy));
-                console.log("subtree =>", subTree);
                 patch(null, subTree, container, instance, anchor);
                 initialVNode.el = subTree.el;
                 instance.isMounted = true;
             }
             else {
+                console.log("update");
                 const { next, vnode } = instance;
                 if (next) {
                     next.el = vnode.el;
@@ -795,8 +801,7 @@ function createRenderer(options) {
             }
         }, {
             scheduler() {
-                console.log("scheduler");
-                queueJob(instance.update);
+                queueJobs(instance.update);
             },
         });
     }

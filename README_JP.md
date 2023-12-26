@@ -63,7 +63,7 @@ Server を使用して `example/*` ディレクトリ内の `index.html` ファ�
 - [x] テキスト型ノードをサポート
 - [x] `props` の更新を実装
 - [x] `nextTick` を実装
-- [ ] `watchEffect` をサポート
+- [x] `watchEffect` をサポート
 
 **reactivity モジュール：**
 

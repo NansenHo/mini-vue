@@ -63,7 +63,7 @@ pnpm run build
 - [x] 支持 Text 类型节点
 - [x] 实现 `props` 更新
 - [x] 实现 `nextTick`
-- [ ] 支持 `watchEffect`
+- [x] 支持 `watchEffect`
 
 **reactivity 模块**:
 
