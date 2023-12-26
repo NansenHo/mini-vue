@@ -88,3 +88,10 @@ Server を使用して `example/*` ディレクトリ内の `index.html` ファ�
 - [x] インターポレーションを解析
 - [x] エレメントを解析
 - [x] テキストを解析
+
+## 参考リンク
+
+- [cuixiaorui/mini-vue](https://github.com/cuixiaorui/mini-vue)
+- [Vue.js の設計と実現](https://github.com/HcySunYang/code-for-vue-3-book)
+- [vuejs/core](https://github.com/vuejs/core/)
+- [Vue.js Contributing Guide](https://github.com/vuejs/core/blob/main/.github/contributing.md)

@@ -85,7 +85,9 @@ To open the `index.html` file in the `example/*` directory, it is recommended to
 - [x] parse element
 - [x] parse text
 
-## Links
+## Reference Links
 
+- [cuixiaorui/mini-vue](https://github.com/cuixiaorui/mini-vue)
+- [HcySunYang/code-for-vue-3-book](https://github.com/HcySunYang/code-for-vue-3-book)
+- [vuejs/core](https://github.com/vuejs/core/)
 - [Vue.js Contributing Guide](https://github.com/vuejs/core/blob/main/.github/contributing.md)
-- []

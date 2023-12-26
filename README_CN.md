@@ -88,3 +88,10 @@ pnpm run build
 - [x] 解析插值
 - [x] 解析 element
 - [x] 解析 text
+
+## 参考链接
+
+- [cuixiaorui/mini-vue](https://github.com/cuixiaorui/mini-vue)
+- [Vue.js 设计与实现](https://github.com/HcySunYang/code-for-vue-3-book)
+- [vuejs/core](https://github.com/vuejs/core/)
+- [Vue.js Contributing Guide](https://github.com/vuejs/core/blob/main/.github/contributing.md)
