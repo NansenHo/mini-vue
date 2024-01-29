@@ -26,6 +26,7 @@ export const App = {
       h(
         "button",
         {
+          class: "props",
           onClick: this.changeChildProps,
         },
         "change child props"
@@ -36,11 +37,12 @@ export const App = {
       h(
         "button",
         {
+          class: "count",
           onClick: this.changeCount,
         },
         "change self count"
       ),
-      h("p", {}, "count: " + this.count),
+      h("p", { class: "count" }, "count:" + this.count),
     ]);
   },
 };

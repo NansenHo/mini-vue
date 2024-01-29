@@ -5,13 +5,16 @@
   "type": "module",
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.2",
+    "cypress": "^13.6.3",
     "rollup": "^3.27.2",
     "tslib": "^2.6.1",
     "typescript": "^5.0.3",
     "vitest": "^0.34.6"
   },
   "scripts": {
-    "test": "vitest",
+    "test-unit": "vitest",
+    "test-e2e": "cypress run",
+    "test-e2e:open": "cypress open",
     "build": "rollup -c rollup.config.js"
   }
 }

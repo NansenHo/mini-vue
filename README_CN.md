@@ -26,8 +26,12 @@ cd mini-vue
 # 安装依赖
 pnpm install
 
-# 运行所有测试
-pnpm run test
+# 运行单元测试
+pnpm run test-unit
+
+# 运行端到端测试
+pnpm run test-e2e
+pnpm run test-e2e:open
 
 # 打包
 pnpm run build
@@ -43,6 +47,7 @@ pnpm run build
 
 - TypeScript
 - Vitest
+- Cypress
 - Rollup
 
 ## 📌 任务

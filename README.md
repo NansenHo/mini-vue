@@ -24,8 +24,12 @@ cd mini-vue
 # install packages
 pnpm install
 
-# run tests
-pnpm run test
+# run unit tests
+pnpm run test-unit
+
+# run e2e tests
+pnpm run test-e2e
+pnpm run test-e2e:open
 
 # build
 pnpm run build
@@ -39,6 +43,7 @@ To open the `index.html` file in the `example/*` directory, it is recommended to
 
 - TypeScript
 - Vitest
+- Cypress
 - Rollup
 
 ## 📌 Tasking

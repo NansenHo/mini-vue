@@ -3,8 +3,8 @@ export default {
   name: "Child",
   setup(props, { emit }) {},
   render(proxy) {
-    return h("div", {}, [
-      h("div", {}, "child - props - msg: " + this.$props.msg),
+    return h("div", { class: "child" }, [
+      h("div", {}, [h("p", {}, this.$props.msg)]),
     ]);
   },
 };

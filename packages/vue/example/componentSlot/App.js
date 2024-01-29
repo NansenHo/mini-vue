@@ -5,7 +5,7 @@ export const App = {
   name: "App",
   setup() {},
   render() {
-    const app = h("div", {}, "App");
+    const app = h("div", { class: "title" }, "App");
 
     // - 我们期望 slotsContent1 和 slotsContent2 作为 Foo 组件的子节点被渲染出来
     // 具名插槽:
@@ -14,7 +14,7 @@ export const App = {
     // - 我们期望在 Foo 组件里定义的 age 可以在 App 组件里使用
     const slotsContent = (age) => [
       h("p", {}, "12" + age),
-      createTextVnode("你好啊"),
+      h("p", {}, [createTextVnode("你好啊")]),
     ];
     const foo = h(
       Foo,

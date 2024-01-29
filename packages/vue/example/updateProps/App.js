@@ -43,6 +43,7 @@ export const App = {
         h(
           "button",
           {
+            class: "modify",
             onClick: this.onChangePropsDemo1,
           },
           "changeProps - 值改变了 - 修改"
@@ -51,6 +52,7 @@ export const App = {
         h(
           "button",
           {
+            class: "delete-undefined",
             onClick: this.onChangePropsDemo2,
           },
           "changeProps - 值变成了 undefined - 删除"
@@ -59,6 +61,7 @@ export const App = {
         h(
           "button",
           {
+            class: "delete-null",
             onClick: this.onChangePropsDemo3,
           },
           "changeProps - key 在新的里面没有了 - 删除"

@@ -13,6 +13,9 @@ export const Foo = {
     // 作用域插槽:
     // - 我们期望在 Foo 组件里定义的 age 可以在 App 组件里使用
     const age = 3;
-    return h("div", {}, [renderSlots(this.$slots, "header", age), foo]);
+    return h("div", { class: "content" }, [
+      renderSlots(this.$slots, "header", age),
+      foo,
+    ]);
   },
 };

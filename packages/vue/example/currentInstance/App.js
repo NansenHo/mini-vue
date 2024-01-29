@@ -5,7 +5,10 @@ export const App = {
   name: "App",
 
   render() {
-    return h("div", {}, [h("p", {}, "currentInstance Demo"), h(Foo)]);
+    return h("div", { class: "title" }, [
+      h("p", {}, "currentInstance Demo"),
+      h(Foo),
+    ]);
   },
 
   setup() {

@@ -26,8 +26,12 @@ cd mini-vue
 # パッケージをインストール
 pnpm install
 
-# テストを実行
-pnpm run test
+# 単体テストを実行
+pnpm run test-unit
+
+# e2eテストを実行
+pnpm run test-e2e
+pnpm run test-e2e:open
 
 # ビルド
 pnpm run build
@@ -43,6 +47,7 @@ Server を使用して `example/*` ディレクトリ内の `index.html` ファ�
 
 - TypeScript
 - Vitest
+- Cypress
 - Rollup
 
 ## 📌 タスク
